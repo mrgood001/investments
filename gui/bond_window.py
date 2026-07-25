@@ -49,7 +49,7 @@ class CalculatorScreen(ttk.Frame):
         self.nkd_entry = ttk.Entry(self.non_standard_frame)
         self.nkd_entry.pack(fill="x")
 
-        ttk.Label(self.non_standard_frame, text="Купонов пришло с даты сделки").pack(anchor="w")
+        ttk.Label(self.non_standard_frame, text="Купонов пришло с даты сделки(необязятельно)").pack(anchor="w")
         self.past_payments_entry = ttk.Entry(self.non_standard_frame)
         self.past_payments_entry.pack(fill="x")
 
@@ -60,9 +60,12 @@ class CalculatorScreen(ttk.Frame):
 
     def _toggle_non_standard_fields(self) -> None:
         if self.non_standard_var.get():
-            self.non_standard_frame.pack(fill="x", padx=10)
+            self.non_standard_frame.pack(fill="x", padx=10, pady=(0,20))
         else:
             self.non_standard_frame.pack_forget()
+
+        self.app.update_idletasks()
+        self.app.geometry("")  # сброс фиксированного размера — Tk сам посчитает нужный
 
     def _get_commission(self) -> float:
         rate = load_commission_rate()
@@ -117,5 +120,6 @@ class CalculatorScreen(ttk.Frame):
                 f"Полная стоимость облигации: {bond.purchase_price}\n"
                 f"во время гашения: {bond.redemption_sum}\n"
                 f"за все время: {bond.coupon_sum}\n"
+                f"выплат в год: {bond.payments_per_year}"
             )
         )

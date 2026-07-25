@@ -55,8 +55,10 @@ class Bond:
 
     @property
     def annual_coupon_yield(self):
-        clean_coupon = self.coupon * (1 - TAX)
+        clean_coupon = round_two_simbol(self.coupon * (1 - TAX))
+        print(clean_coupon,'\n')
         percent = round_two_simbol(clean_coupon * 100 / self.purchase_price)
+        print(percent,'\n')
         return percent * self.payments_per_year
 
     @property

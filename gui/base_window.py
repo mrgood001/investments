@@ -9,14 +9,16 @@ class BaseApp(tk.Tk):
     и решают, какой показать первым.
     """
 
-    def __init__(self, title: str = "App", geometry: str = "1800x1600"):
+    def __init__(self, title: str = "App", geometry: str = "600x500"):
         super().__init__()
         self.title(title)
-        self.geometry(geometry)
+        self.minsize(*map(int, geometry.replace("x", " ").split()))
 
         self.style = ttk.Style(self)
         self.container = ttk.Frame(self)
         self.container.pack(fill="both", expand=True)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
         self.screens: dict[str, ttk.Frame] = {}
         self.current_screen: str | None = None
@@ -25,13 +27,12 @@ class BaseApp(tk.Tk):
 
     def register_screen(self, name: str, screen: ttk.Frame) -> None:
         self.screens[name] = screen
-        screen.place(in_=self.container, x=0, y=0, relwidth=1, relheight=1)
-        screen.lower()
+        screen.grid(row=0, column=0, sticky="nsew", in_=self.container)
 
     def show_screen(self, name: str) -> None:
         if name not in self.screens:
             raise ValueError(f"Unknown screen: {name}")
-        self.screens[name].lift()
+        self.screens[name].tkraise()
         self.current_screen = name
 
     def apply_theme(self, theme: str) -> None:
