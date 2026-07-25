@@ -3,4 +3,4 @@ venv/
 __pycache__
 
 data/
-user_settings
+user_settings.json
