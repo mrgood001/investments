@@ -112,14 +112,9 @@ class CalculatorScreen(ttk.Frame):
 
         self.result_label.config(
             text=(
-                f"Чистая доходность: {bond.clean_income} руб.\n"
                 f"Доходность за период: {bond.total_yield}%\n"
                 f"Годовая доходность: {bond.annual_yield}%\n"
                 f"Годовая купонная доходность: {bond.annual_coupon_yield}%\n"
                 f"Коммисия облигации: {bond.commission}\n"
-                f"Полная стоимость облигации: {bond.purchase_price}\n"
-                f"во время гашения: {bond.redemption_sum}\n"
-                f"за все время: {bond.coupon_sum}\n"
-                f"выплат в год: {bond.payments_per_year}"
             )
         )

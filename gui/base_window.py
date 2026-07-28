@@ -1,5 +1,13 @@
+import sys
 import tkinter as tk
+from pathlib import Path
 from tkinter import ttk
+
+
+def resource_path(relative_path: str) -> Path:
+    """Путь к ресурсу, рабочий и при запуске из исходников, и из PyInstaller-бандла."""
+    base_path = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent.parent))
+    return base_path / relative_path
 
 
 class BaseApp(tk.Tk):
@@ -13,6 +21,9 @@ class BaseApp(tk.Tk):
         super().__init__()
         self.title(title)
         self.minsize(*map(int, geometry.replace("x", " ").split()))
+
+        icon_path = resource_path("assets/icon.png")
+        self.iconphoto(True, tk.PhotoImage(file=str(icon_path)))
 
         self.style = ttk.Style(self)
         self.container = ttk.Frame(self)
